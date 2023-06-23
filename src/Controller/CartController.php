@@ -130,9 +130,9 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/commande/{id}/delete', name: 'cart_commande_delete')]
-    public function deleteCommande($id, EntityManagerInterface $manager, CommandeRepository $commandeRepository): Response
+    public function deleteCommande($id, EntityManagerInterface $manager, ProduitRepository $produitRepository): Response
     {
-        $commande = $commandeRepository->find($id);
+        $commande = $manager->getRepository(Commande::class)->find($id);
 
         if (!$commande) {
             // Gérer le cas où la commande n'est pas trouvée
@@ -140,11 +140,19 @@ class CartController extends AbstractController
             // ...
         }
 
+        // Récupérer la quantité commandée et le produit associé à la commande
+        $quantiteCommandee = $commande->getQuantite();
+        $produit = $commande->getProduit();
+
+        // Incrémenter la quantité commandée au stock du produit
+        $nouveauStock = $produit->getStock() + $quantiteCommandee;
+        $produit->setStock($nouveauStock);
+
         // Supprimer la commande
         $manager->remove($commande);
         $manager->flush();
 
-        // Ajoutez un message flash pour indiquer que la commande a été supprimée avec succès
+        // Ajouter un message flash pour indiquer que la commande a été supprimée avec succès
         $this->addFlash('success', 'La commande a été supprimée avec succès.');
 
         return $this->redirectToRoute('cart_commandes_user');
