@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My$hop{% endblock %}
+
+{% block body %}
+
+<div class="hero">
+    <h1 class="text-center">Bienvenue sur My$hop</h1>
+    <h2 class="text-center">Venez acheter nos super T-shirts</h2>
+    <a href="#produit" class="btn btn-info w-25 mx-auto d-block">Voir nos produits</a>
+</div>
+
+<div class="container mt-3">
+  <div class="row justify-content-between flex-wrap">
+
+    <h2 class="text-center text-info mt-5 mb-5" id="produit">Nos Produits</h2>
+    
+    {% for produit in produits %}
+    <div class="col-12 col-md-3 m-3">
+      <div class="card text-white bg-info mb-3 h-100">
+        <div class="card-header">
+          <img src="{{ asset('images/produit/' ~ produit.photo) }}" class="img-fluid" alt="">
+        </div>
+        <div class="card-body bg-light">
+          <h5 class="fw-bold fst-italic text-center text-dark">Titre: {{ produit.titre }}</h5>
+          <hr class="text-dark">
+          <p class="text-center text-dark">Description: {{ produit.description|slice(0, 100) }}</p>
+          <p class="text-center text-dark">Taille: {{ produit.taille }}</p>
+          <p class="text-center text-dark">Stock: {{ produit.stock }}</p>
+        </div>
+        <div class="card-footer">
+          <p class="card-text text-center fw-bold">Prix: {{ produit.prix }}€</p>
+          {% if app.user %}
+          <div class="text-center my-3">
+            {% if produit.stock > 0 %}
+              <a href="{{ path('cart_ad', {id: produit.id}) }}" class="btn btn-success">Ajouter au panier</a>
+            {% else %}
+              <p class="text-center">En rupture de stock</p>
+            {% endif %}
+          </div>
+          {% else %}
+          <p class="text-center">Pour acheter le T-shirt, <a class="btn btn-success" href="{{ path('app_register') }}">Inscrivez-vous</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

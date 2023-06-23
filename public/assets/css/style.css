@@ -1,0 +1,30 @@
+*{
+    scroll-behavior: smooth;
+}
+
+.hero{
+    background-image: url('../img/boutique.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 950px;   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.hero h1{
+    color:#011a1a;
+    font-size: 40px;
+    -webkit-text-stroke: 1px #00ced1;
+}
+
+.hero h2{
+    color: #011a1a;
+    -webkit-text-stroke: 1px #00ced1;
+}
+
+.hero a{
+    color:#011a1a;
+}

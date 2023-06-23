@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Gestion des articles
+{% endblock title %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center w-50 mx-auto my2">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <div class="container">
+        <div class="text-center m-4 h1">Gestion des produits</div>
+        <div>
+        <a href="{{ path('app_admin') }}" class="btn btn-primary mb-3 col-5">Retour accueil BACK OFFICE</a>
+        <a href="{{ path('new_produit')}}" class="btn btn-primary mb-3 col-5">Ajouter un produit</a>
+        </div>
+        <table class="table mt-4">
+            <thead class="table-dark">
+                <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Titre</th>
+                        <th class="text-center">marque</th>
+                        <th class="text-center">modele</th>
+                        <th class="text-center">descritpion</th>
+                        <th class="text-center">photo</th>
+                        <th class="text-center">Prix journalier</th>
+                        <th class="text-center">Ajouter le</th>
+                    <th class="text-center">Option</th>
+                </tr>
+            </thead>
+            <tbody class="table-primary">
+                
+                    {% for produit in produits %}
+                        <tr>
+                            <td class="text-center">{{ produit.id }}</td>
+                            <td class="text-center">{{ produit.titre }}</td>
+                            <td class="text-center">{{ produit.taille }}</td>
+                            <td class="text-center">{{ produit.couleur }}</td>
+                            <td class="text-center">{{ produit.description }}</td>
+                            <td class="text-center">{{ produit.photo }}</td>
+                            <td class="text-center">{{ produit.prix }}€</td>
+                            <td class="text-center">{{ produit.dateEnregistrement|date("m/d/Y à H:i:s") }}</td>
+                            <td class="text-center">
+                                 {# <a href="{{ path('show_produit', {id: produit.id}) }}" class="text-info"><i class="fa fa-car"></i></a> #}
+                                <a href="{{ path('edit_produit', {id: produit.id}) }}" class="text-warning"><i class="fa fa-edit"></i></a>
+                                <a href="{{ path('delete_produit', {id: produit.id}) }}" class="text-danger"><i class="fa fa-trash"></i></a>
+                                 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+{% endblock body %}

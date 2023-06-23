@@ -1,0 +1,1 @@
+ChoiceField::new('etat')->setChoices(['En cours de traitement' => 'En cours de traitement', 'En cours de préparation' =>'En cours de préparation', 'En cours d\'expédition'=>'En cours d\'expédition', 'En cours de livraison'=>'En cours de livraison', 'Livré' =>'Livré' ]),

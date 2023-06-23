@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-4 text-info">Votre panier</h1>
+    {% if items %}
+    <table class="table table-info mt-4">
+        <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Produit</th>
+                <th class="text-center">Description</th>
+                <th class="text-center w-25">Photo</th>
+                <th class="text-center">Couleur</th>
+                <th class="text-center">Taille</th>
+                <th class="text-center">Prix</th>
+                <th class="text-center">Quantité</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td class="text-center">{{ item.product.id}}</td>
+                <td class="text-center">{{ item.product.titre}}</td>
+                <td class="text-center">{{ item.product.description}}</td>
+                <td class="text-center"><img src="{{ asset('images/produit/' ~  item.product.photo )}}" alt="" class="img-fluid h-50 w-50"></td>
+                {% if item.product.couleur == '#000000' %}
+                    <td class="text-center">Noir</td>
+                    {% elseif item.product.couleur == '#ffffff' %}
+                    <td class="text-center">Blanc</td>
+                    {% elseif item.product.couleur == '#0000ff' %}
+                    <td class="text-center">Bleu</td>
+                    {% elseif item.product.couleur == '#ff0000' %}
+                    <td class="text-center">Rouge</td>
+                    {% elseif item.product.couleur == '#00ff0' %}
+                    <td class="text-center">Vert</td>
+                    {% else %}
+                    <td class="text-center">{{ item.product.couleur }}</td>
+                    {% endif %}
+                <td class="text-center">{{ item.product.taille}}</td>
+                <td class="text-center">{{ item.product.prix}}€</td>
+                <td class="text-center">{{ item.quantity}}</td>
+                <td class="text-center">{{ item.product.prix * item.quantity}}€</td>
+                <td class="text-center">
+                    <a href="{{ path('cart_addd', {id: item.product.id}) }}" class="btn btn-sm btn-success">+</a>
+                    <a href="{{ path('cart_less', {id: item.product.id}) }}" class="btn btn-sm btn-warning">-</a>
+                    <a href="{{ path('cart_remove', {id: item.product.id}) }}" class="btn btn-sm btn-danger">X</a>
+                </td>
+            </tr>                
+            {% endfor %}
+        </tbody>
+    </table>
+    <h5 class="bg-info text-end text-center text-light rounded col-3">Total : {{ total }}€</h5>
+    <a href="{{ path('cart_commande') }}" class="btn btn-info mb-3 mt-3">Passer la Commande</a>
+    <a class="btn btn-info mb-3 mt-3" href="{{ path('cart_commandes_clear')}}">Vider le panier</a>
+    {% else %}
+    <p>Votre panier est vide</p>       
+    {% endif %}
+</div>
+{% endblock %}

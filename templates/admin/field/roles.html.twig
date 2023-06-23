@@ -1,0 +1,18 @@
+{% block _User_roles %}
+{# block name %}{% endblock #}
+
+
+
+{% for role in field.value %}
+    {% if role == 'ROLE_USER' %}
+        Membre
+    {% elseif role == "ROLE_ADMIN" %}
+        Admin
+    {% endif %}
+    
+{% endfor %}
+
+
+
+
+{% endblock %}

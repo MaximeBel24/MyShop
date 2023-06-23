@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center my-4 text-info">Mes commandes</h1>
+
+    {# <div class="card mb-3">
+        <div class="card-header">
+            Informations membre
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ commandes.membre.pseudo }}</h5>
+            <p class="card-text">
+                <strong>Email:</strong> {{ commandes.membre.email }}<br>
+                <strong>Nom:</strong> {{ commandes.membre.nom }}<br>
+                <strong>Prénom:</strong> {{ commandes.membre.prenom }}<br>
+            </p>
+        </div>
+    </div> #}
+
+    {% if commandes is empty %}
+        <p>Aucune commande passée.</p>
+    {% else %}
+
+        <table class="table mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Date de commande</th>
+                    <th class="text-center">Montant</th>
+                    <th class="text-center">État</th>
+                    <th class="text-center">Utilisateur</th>
+                    <th class="text-center">Quantité</th>
+                    <th class="text-center">Produit</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody class="table-info">
+                {% for commande in commandes %}
+                    <tr>
+                        <td class="text-center">{{ commande.id}}</td>
+                        <td class="text-center">{{ commande.dateEnregistrement|date("m/d/Y à H:i:s") }}</td>
+                        <td class="text-center">{{ commande.montant }}€</td>
+                        <td class="text-center">{{ commande.etat }}</td>
+                        <td class="text-center">{{ commande.membre.pseudo }}</td>
+                        <td class="text-center">{{ commande.quantite }}</td>
+                        <td class="text-center">{{ commande.produit.titre }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('cart_commande_delete', {id: commande.id}) }}" class="text-danger"><i class="fa fa-trash"></i></a>
+
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
