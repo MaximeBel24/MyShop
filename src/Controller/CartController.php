@@ -18,16 +18,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {
     #[Route('/cart', name: 'app_cart')]
-    public function index(ProduitRepository $repo, CartService $cs): Response
+    public function index(ProduitRepository $repo, CartService $cs, RequestStack $requestStack): Response
     {
         $cartWithData = $cs->cartWithData();
         $total = $cs->total();
         
+        $showModal = $requestStack->getCurrentRequest()->query->get('showModal', false);
 
         return $this->render('cart/index.html.twig',[
             'items' => $cartWithData,
-            'total' => $total
+            'total' => $total,
+            'showModal' => true
         ]);
+    }
+
+    #[Route('/cart/show-modal', name: 'app_cart_show_modal')]
+    public function showModal(): Response
+    {
+        return $this->redirectToRoute('app_cart', ['showModal' => true]);
     }
 
     #[Route('/cart/ad/{id}', name:'cart_ad')]

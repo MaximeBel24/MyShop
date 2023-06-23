@@ -47,9 +47,6 @@
                 <td class="text-center">{{ item.quantity}}</td>
                 <td class="text-center">{{ item.product.prix * item.quantity}}€</td>
                 <td class="text-center">
-                {# {% if condition %} #}
-                    
-                {# {% endif %} #}
                     <a href="{{ path('cart_remove', {id: item.product.id}) }}" class="btn btn-sm btn-danger">X</a>
                 </td>
             </tr>                
@@ -62,4 +59,6 @@
     <p>Votre panier est vide</p>       
     {% endif %}
 </div>
+
+
 {% endblock %}
